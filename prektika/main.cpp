@@ -55,21 +55,21 @@ vector <Librian> libr;
 vector <Admin> admins;
 int main()
 {
-    for (int i = 0; i<5;i++)//5  читателей
+    for (int i = 0; i<5;i++)//5  chitatelej
         view.push_back(Viewer(rand()%100));
     for (int i = 0; i<3; i++)// 3 bibliotekar
         libr.push_back(Librian(rand()%100));
     for (int i = 0; i<2; i++)
         admins.push_back(Admin(rand()%100));
-    for (int i = 0; i<view.size();i++)//5  новых карточек
+    for (int i = 0; i<view.size();i++)//5  novyh kartochek
         view[i].creatCart(1);
     for (int i = 0; i<12; i++)//BOOK
         admins[rand()%admins.size()].transferBook(10+rand()%90);
-    for (int i=0; i<5; i++) //Берут книги
+    for (int i=0; i<5; i++) //Berut knigi
         view[i].transferBook(10+rand()%90);
-    for (int i=0; i<5; i++) //Забирают книги
+    for (int i=0; i<5; i++) //Zabirayut knigi
         view[i].transferBook(0);
-    for (int i = 0; i<12; i++)//попытка списать книги
+    for (int i = 0; i<12; i++)//popytka spisat' knigi
         admins[rand()%admins.size()].transferBook(10+rand()%90);
     
 };
@@ -84,27 +84,27 @@ Viewer::Viewer(int number):Human(number)
 };
 void Viewer::creatCart(int nViewer)
 {
-    cout<<"Читатель №"<<number<<" хочу зарегистрироваться"<<endl;
+    cout<<"CHitatel' №"<<number<<" hochu zaregistrirovat'sya"<<endl;
     libr[rand()%libr.size()].creatCart(number);
     
 };
 bool Viewer::transferBook(int Book)
 {
     int randlibr =rand()%libr.size();
-    cout<<"Читатель №"<<number<<" Я пришел к Вам"<<endl;
+    cout<<"CHitatel' №"<<number<<" YA prishel k Vam"<<endl;
     libr[randlibr].getCart(number);
     if (nBook == 0)
     {
-        cout<<"Читатель №"<<number<<" хочу получить новую книгу "<<Book<<endl;
+        cout<<"CHitatel' №"<<number<<" hochu poluchit' novuyu knigu "<<Book<<endl;
         if (libr[randlibr].transferBook(Book) == false)
         {
-            cout<<"Читатель №"<<number<<"  Я огорчен"<<endl;
+            cout<<"CHitatel' №"<<number<<"  YA ogorchen"<<endl;
         };
         
     } else
     {
         libr[randlibr].transferBook(nBook);
-        cout<<"Читатель №"<<number<<" Хочу сдать книгу "<<nBook<<endl;
+        cout<<"CHitatel' №"<<number<<" Hochu sdat' knigu "<<nBook<<endl;
     }
     return true;
 }
@@ -114,7 +114,7 @@ Librian::Librian(int number):Human(number)
 };
 void Librian::creatCart(int nViewer)
 {
-    cout<<"Библиотекарь № "<<number<<" Нужно завести карточку №"<<nViewer<<endl;
+    cout<<"Bibliotekar' № "<<number<<" Nuzhno zavesti kartochku №"<<nViewer<<endl;
     admins[rand()%admins.size()].creatCart(nViewer);
     
 }
@@ -122,7 +122,7 @@ bool Librian::transferBook(int nBook)
 {
     if (cart.nBook == 0)
     {
-        cout<<"Библиотекарь № "<<number<<" Ищу нужную книгу"<<endl;
+        cout<<"Bibliotekar' № "<<number<<" Ishchu nuzhnuyu knigu"<<endl;
         for (int i = 0; i < book.size(); i++ )
         {
             if (book[i] == nBook)
@@ -130,15 +130,15 @@ bool Librian::transferBook(int nBook)
                 book.erase(book.begin()+i);
                 cart.nBook = nBook;
                 admins[rand()%admins.size()].putCart(cart);
-                cout<<"Библиотекарь № "<<number<<" Книгу выдала"<<endl;
+                cout<<"Bibliotekar' № "<<number<<" Knigu vydala"<<endl;
                 return true;
             }
         }
-        cout<<"Библиотекарь № "<<number<<" Книги нет"<<endl;
+        cout<<"Bibliotekar' № "<<number<<" Knigi net"<<endl;
         return false;
     } else
     {
-        cout<<"Библиотекарь № "<<number<<" Книгу забрала"<<endl;
+        cout<<"Bibliotekar' № "<<number<<" Knigu zabrala"<<endl;
         book.push_back(nBook);
         cart.nBook = 0;
         admins[rand()%admins.size()].putCart(cart);
@@ -147,9 +147,9 @@ bool Librian::transferBook(int nBook)
 }
 void Librian::getCart(int nViewer)
 {
-    cout<<"Библиотекарь № "<<number<<" Нужна крточка"<<endl;
+    cout<<"Bibliotekar' № "<<number<<" Nuzhna krtochka"<<endl;
     cart = admins[rand()%admins.size()].returnCart(nViewer);
-    cout<<"Библиотекарь № "<<number<<" Карточку получила № карты "<<cart.nCart<<endl;
+    cout<<"Bibliotekar' № "<<number<<" Kartochku poluchila № karty "<<cart.nCart<<endl;
 }
 //Admin
 Admin::Admin(int number):Human(number){};
@@ -158,7 +158,7 @@ void Admin::creatCart(int nViewer)
     carts.push_back(Cart());
     carts.back().nBook = 0;
     carts.back().nCart = nViewer;
-    cout<<"Администратор №"<<number<<" Карточку создал"<<endl;
+    cout<<"Administrator №"<<number<<" Kartochku sozdal"<<endl;
 };
 bool Admin::transferBook(int nBook)
 {
@@ -167,12 +167,12 @@ bool Admin::transferBook(int nBook)
         if (nBook == Librian::book[i])
         {
             Librian::book.erase(Librian::book.begin()+i);
-            cout<<"Администратор №"<<number<<" Книгу №"<<nBook<<" списал"<<endl;
+            cout<<"Administrator №"<<number<<" Knigu №"<<nBook<<" spisal"<<endl;
             return false;
         }
     }
     Librian::book.push_back(nBook);
-    cout<<"Администратор №"<<number<<" Книгу №"<<nBook<<" получил"<<endl;
+    cout<<"Administrator №"<<number<<" Knigu №"<<nBook<<" poluchil"<<endl;
     return true;
 };
 Cart Admin::returnCart(int nViewer)
@@ -184,7 +184,7 @@ Cart Admin::returnCart(int nViewer)
         {
             cart = carts[i];
             carts.erase(carts.begin()+i);
-            cout<<"Администратор №"<<number<<" Держи"<<endl;
+            cout<<"Administrator №"<<number<<" Derzhi"<<endl;
             return cart;
         }
     }
